@@ -7,13 +7,27 @@ file = open(filename, "r")
 
 num = 1
 for line in file:
+    if (line == "\n"):
+        exit(2)
+
     x = line.split(" , ")
     url = x[0]
+    real = x[1]
+    one = "1\n"
+    zero = "0\n"
 
-    if (x[1] == 1):
-        jpg_filename = "../images/line" + str(num) + "_1.jpg"
+    print("line " + str(num) + ": " + url)
+
+    if (real == one):
+        jpg_filename = "../real_site/line" + str(num) + ".jpg"
+    elif (real == zero):
+        jpg_filename = "../phishing_site/line" + str(num) + ".jpg"
     else:
-        jpg_filename = "../images/line" + str(num) + "_0.jpg"
+        print("LABEL ERROR")
 
-    imgkit.from_url(url, jpg_filename) # first token in string
+    try:
+        imgkit.from_url(url, jpg_filename) # first token in string
+    except:
+        print("line " + str(num) + " site not found")
+
     num += 1
